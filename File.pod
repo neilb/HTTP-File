@@ -87,11 +87,27 @@ is not specified.
     Returns the basename of the uploaded file;
 
 
+As of version 3.1, there are two new args to upload():
+
+=over 4 
+
+=item * $debug
+
+A third argument, C<$debug>, if non-zero will send
+debugging information to STDERR. 
+
+=item * $kludge
+
+A fourth argument, C<$kludge>, if non-zero, will also write
+the read data to a file in the temp directory.
+
+=back
+
 
 =head1 AUTHOR
 
 Terrence Brannon
-PrincePawn@Yahoo.COM
+tbone@cpan.org
 
 =cut
 
