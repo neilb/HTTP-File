@@ -1,0 +1,11 @@
+# http://module-build.sourceforge.net/META-spec.html
+#XXXXXXX This is a prototype!!!  It will change in the future!!! XXXXX#
+name:         HTTP-File
+version:      3.7
+version_from: File.pm
+installdirs:  site
+requires:
+    HTTP::Headers::UserAgent:      1.00
+
+distribution_type: module
+generated_by: ExtUtils::MakeMaker version 6.16

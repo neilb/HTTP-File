@@ -6,7 +6,7 @@ use File::Basename;
 use strict;
 
 
-$HTTP::File::VERSION = '3.6';
+$HTTP::File::VERSION = '3.7';
 
 package HTTP::File;
 sub platform {
@@ -47,6 +47,9 @@ sub upload {
     wifd "basename \t $basename"  , $debug;
 
     open  O, ">$path/$basename" || die $!;
+    # If the input file is binary, the output file should also be binary
+    binmode O if (-B $raw_file);			
+
     (open  K, ">$temp_dir/$basename" || die $!) if $kludge;
     {
 	my $buffer;

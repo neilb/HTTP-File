@@ -9,3 +9,4 @@ hidden-email
 savepage.html.template
 savepage.cgi.template
 test.pl
+META.yml                                Module meta-data (added by MakeMaker)

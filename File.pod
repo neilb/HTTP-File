@@ -106,8 +106,10 @@ the read data to a file in the temp directory.
 
 =head1 AUTHOR
 
-Terrence Brannon
-tbone@cpan.org
+Terrence Brannon E<gt>tbone@cpan.orgE<lt>
+
+binmode support for Windows 
+added by Mark Zellers: (reverse com dot docent at mzellers
 
 =cut
 
