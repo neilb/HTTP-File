@@ -1,31 +1,13 @@
+#!/usr/bin/perl
+
+
 use HTTP::Headers::UserAgent;
 use File::Basename;
 
 
+$VERSION = '2.2';
+
 package HTTP::File;
-
-use strict;
-use vars qw($VERSION @ISA @EXPORT @EXPORT_OK);
-
-require Exporter;
-
-@ISA = qw(Exporter AutoLoader);
-# Items to export into callers namespace by default. Note: do not export
-# names by default without a very good reason. Use EXPORT_OK instead.
-# Do not simply export all your public functions/methods/constants.
-@EXPORT = qw(
-	
-);
-$VERSION = '2.1';
-
-
-# Preloaded methods go here.
-
-# Autoload methods go after =cut, and are processed by the autosplit program.
-
-1;
-__END__
-# Below is the stub of documentation for your module. You better edit it!
 
 =head1 NAME
 
@@ -34,45 +16,25 @@ HTTP::File - Routines to deal with HTML input type file.
 
 =cut
 
-=head1 SYNOPSIS (CGI.pm example)
+=head1 SYNOPSIS (HTML::Mason example)
 
-C<savepage.html> looks like this:
-
-<H1>Upload a webpage</H1>
-
-<FORM METHOD=POST ENCTYPE="multipart/form-data" action="/cgi-bin/webplugin/savepage.cgi"> 
-
-<INPUT TYPE=file name=FILE_UPLOAD size=35> 
-
-<INPUT TYPE=submit NAME=Action VALUE="Upload Ahoy!">
-
+<FORM METHOD=POST ENCTYPE="multipart/form-data" action="receive-upload.html">
+<INPUT TYPE=file name=PHOTO_FILE size=35>
 </FORM>
 
+... then in receive-upload.html
 
-C<savepage.cgi> looks like this:
+<%init>
+    use HTTP::File;
+</%init>
 
-#!/usr/bin/perl
+<%perl>
+$output_path="/var/spool";
+$raw_file=$ARGS{PHOTO_FILE};
+HTTP::File::upload($raw_file, $output_path);
+</%perl>
 
-use CGI;
-use HTTP::File;
-
-$cgi = new CGI;
-
-$upload_path='/tmp';
-
-$raw_file = $cgi->param('FILE_UPLOAD');
-$basename = HTTP::File::upload($raw_file,$upload_path);
-
-
-print $cgi->header;
-print $cgi->start_html;
-
-print "$basename upload successfully.<BR>Upload path: ";
-print $upload_path ? $upload_path : '/tmp';
-
-print $cgi->end_html;
-
-
+=cut
 
 =head1 DESCRIPTION
 
@@ -87,16 +49,56 @@ platforms.
 Uses a subset of the functionality of HTTP::Headers::UserAgent to determine
 the type of machine that uploaded the file.
 
+=cut
 
+sub platform {
+
+    $__platform = HTTP::Headers::UserAgent::GetPlatform ($ENV{HTTP_USER_AGENT});
+    $__platform =~ /^Win/ && return 'MSWin32';
+    $__platform =~ /^MAC/ && return 'MacOS';
+    $__platform =~ /x$/   && return '';
+
+
+}
 
 =head2 sub upload
 
 Upload RAW_FILE to the local disk to a specified PATH, or to /tmp if PATH
 is not specified.
 
-    Returns the basename of the uploaded file;
+=cut
+
+sub upload {
+
+    ($raw_file, $path,)=@_;
+
+    warn " ** raw_file $raw_file\n";
+
+    $path = $path ? $path : '/tmp';
+
+    warn " ** path $path\n";
+
+    $platform = platform;
+
+    warn " ** platform $platform\n";
+
+  File::Basename::fileparse_set_fstype(platform);
+      ($basename,$junk,$junk) = File::Basename::fileparse $raw_file;
+
+    warn " ** basename $basename\n";
+
+    open  O, ">$path/$basename" || die $!;
+    while ($bytesread = read($raw_file,$buffer,1024)) {
+        print O $buffer;
+    }
+    close O;
+
+    return $basename;
+
+}
 
 
+1;
 
 =head1 AUTHOR
 
@@ -104,5 +106,3 @@ Terrence Brannon
 PrincePawn@Yahoo.COM
 
 =cut
-
-
