@@ -1,28 +1,20 @@
-#!/usr/bin/perl
+# Before `make install' is performed this script should be runnable with
+# `make test'. After `make install' it should work as `perl test.pl'
 
+######################### We start with some black magic to print on failure.
 
-    use File::Basename;
+# Change 1..1 below to 1..last_test_to_print .
+# (It may become useful if the test is moved to ./t subdirectory.)
 
-
-fileparse_set_fstype("MSWin32");
-
-$file='C:\My Documents\mythIIdemo\thanks.htm';
-
-#$basename=basename($file);
-
-#warn $basename;
-
-($basename,$path,$suffix)=fileparse($file);
-
-
-warn $basename;
-warn $path;
-warn $suffix;
-
-
-
+BEGIN { $| = 1; print "1..1\n"; }
+END {print "not ok 1\n" unless $loaded;}
 use HTTP::File;
+$loaded = 1;
+print "ok 1\n";
 
-system "mkdir /tmp/TEST";
-HTTP::File::upload("uuuuuaaa", '/tmp/TEST');
+######################### End of black magic.
+
+# Insert your test code below (better if it prints "ok 13"
+# (correspondingly "not ok 13") depending on the success of chunk 13
+# of the test code):
 
