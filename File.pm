@@ -1,12 +1,12 @@
 #!/usr/bin/perl -w
 
 
-#use HTTP::Headers::UserAgent;
+use HTTP::Headers::UserAgent;
 use File::Basename;
 use strict;
 
 
-$HTTP::File::VERSION = '3.2';
+$HTTP::File::VERSION = '3.3';
 
 package HTTP::File;
 sub platform {
