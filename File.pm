@@ -16,7 +16,7 @@ require Exporter;
 @EXPORT = qw(
 	
 );
-$VERSION = '2.0';
+$VERSION = '2.1';
 
 
 # Preloaded methods go here.
@@ -48,6 +48,7 @@ C<savepage.html> looks like this:
 
 </FORM>
 
+
 C<savepage.cgi> looks like this:
 
 #!/usr/bin/perl
@@ -61,6 +62,15 @@ $upload_path='/tmp';
 
 $raw_file = $cgi->param('FILE_UPLOAD');
 $basename = HTTP::File::upload($raw_file,$upload_path);
+
+
+print $cgi->header;
+print $cgi->start_html;
+
+print "$basename upload successfully.<BR>Upload path: ";
+print $upload_path ? $upload_path : '/tmp';
+
+print $cgi->end_html;
 
 
 
