@@ -1,0 +1,27 @@
+NAME
+    HTTP::File - Routines to deal with HTML input type file.
+
+SYNOPSIS
+        use HTTP::File;
+
+    $output_path="/var/spool"; $raw_file=$cgi->param('file_to_upload');
+    HTTP::File::upload($raw_file, $output_path);
+
+DESCRIPTION
+    HTTP::File is a module to facilitate file uploads from HTML file
+    input.It detects the basename of the raw file across MacOS, Windows, and
+    Unix/Linux platforms.
+
+  sub platform
+
+    Uses a subset of the functionality of HTTP::Headers::UserAgent to
+    determine the type of machine that uploaded the file.
+
+  sub upload
+
+    Upload RAW_FILE to the local disk to a specified PATH, or to /tmp if
+    PATH is not specified.
+
+AUTHOR
+    Terrence Brannon PrincePawn@Yahoo.COM
+
