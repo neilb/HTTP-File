@@ -6,7 +6,7 @@ use File::Basename;
 use strict;
 
 
-$HTTP::File::VERSION = '3.8';
+$HTTP::File::VERSION = '3.9';
 
 package HTTP::File;
 sub platform {

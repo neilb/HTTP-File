@@ -103,6 +103,10 @@ the read data to a file in the temp directory.
 
 =back
 
+=head1 THIS FUNCTIONALITY EXISTS IN CGI.pm NOW
+
+This module exists for backwards-compatibility. CGI.pm now has an C<upload()>
+function which serves the same purpose.
 
 =head1 AUTHOR
 
@@ -113,6 +117,9 @@ added by Mark Zellers: (reverse com dot docent at mzellers
 
 Perl 5.8.x taint compatibility added by Rodd Clarkson
 rodd at redfishbluefish dot com dot au
+
+Rodd also suggested that I refer people to a more modern and popular solution
+to the problem of uploading files --- CGI.pm
 
 =cut
 
