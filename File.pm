@@ -6,7 +6,7 @@ use File::Basename;
 use strict;
 
 
-$HTTP::File::VERSION = '3.3';
+$HTTP::File::VERSION = '3.4';
 
 package HTTP::File;
 sub platform {
@@ -40,6 +40,7 @@ sub upload {
   File::Basename::fileparse_set_fstype(platform);
     my ($basename,$junk,$junk2) = File::Basename::fileparse $raw_file;
 
+    wifd(sprintf("ref(raw_file) \t %s", ref($raw_file))  , $debug);
     wifd "raw_file \t $raw_file"  , $debug;
     wifd "path     \t $path"      , $debug;
     wifd "platform \t $platform"  , $debug;
