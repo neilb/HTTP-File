@@ -5,7 +5,7 @@ use HTTP::Headers::UserAgent;
 use File::Basename;
 
 
-$VERSION = '1.00';
+$VERSION = '1.1';
 
 package HTTP::File;
 
@@ -16,13 +16,23 @@ HTTP::File - Routines to deal with HTML input type file.
 
 =cut
 
-=head1 SYNOPSIS
+=head1 SYNOPSIS (HTML::Mason example)
 
+<FORM METHOD=POST ENCTYPE="multipart/form-data" action="receive-upload.html">
+<INPUT TYPE=file name=PHOTO_FILE size=35>
+</FORM>
+
+... then in receive-upload.html
+
+<%init>
     use HTTP::File;
+</%init>
 
+<%perl>
 $output_path="/var/spool";
-$raw_file=$cgi->param('file_to_upload');
+$raw_file=$ARGS{PHOTO_FILE};
 HTTP::File::upload($raw_file, $output_path);
+</%perl>
 
 =cut
 
@@ -43,11 +53,11 @@ the type of machine that uploaded the file.
 
 sub platform {
 
-    $platform =  HTTP::Headers::UserAgent::GetPlatform ($ENV{HTTP_USER_AGENT});
+    $__platform = HTTP::Headers::UserAgent::GetPlatform ($ENV{HTTP_USER_AGENT});
+    $__platform =~ /^Win/ && return 'MSWin32';
+    $__platform =~ /^MAC/ && return 'MacOS';
+    $__platform =~ /x$/   && return '';
 
-    $platform =~ /^Win/ && return 'MSDOS';
-    $platform =~ /^MAC/ && return 'MacOS';
-    $platform =~ /x$/   && return '';    
 
 }
 
@@ -59,17 +69,32 @@ is not specified.
 =cut
 
 sub upload {
+
     ($raw_file, $path,)=@_;
+
+    warn " ** raw_file $raw_file\n";
 
     $path = $path ? $path : '/tmp';
 
-    $basename =File::Basename::basename $raw_file, platform($raw_file);
+    warn " ** path $path\n";
+
+    $platform = platform;
+
+    warn " ** platform $platform\n";
+
+  File::Basename::fileparse_set_fstype(platform);
+      ($basename,$junk,$junk) = File::Basename::fileparse $raw_file;
+
+    warn " ** basename $basename\n";
 
     open  O, ">$path/$basename" || die $!;
     while ($bytesread = read($raw_file,$buffer,1024)) {
-	print O $buffer;
+        print O $buffer;
     }
     close O;
+
+    return $basename;
+
 }
 
 

@@ -1,11 +1,16 @@
 NAME
     HTTP::File - Routines to deal with HTML input type file.
 
-SYNOPSIS
-        use HTTP::File;
+SYNOPSIS (HTML::Mason example)
+    <FORM METHOD=POST ENCTYPE="multipart/form-data" action="receive-
+    upload.html"> <INPUT TYPE=file name=PHOTO_FILE size=35> </FORM>
 
-    $output_path="/var/spool"; $raw_file=$cgi->param('file_to_upload');
-    HTTP::File::upload($raw_file, $output_path);
+    ... then in receive-upload.html
+
+    <%init> use HTTP::File; </%init>
+
+    <%perl> $output_path="/var/spool"; $raw_file=$ARGS{PHOTO_FILE};
+    HTTP::File::upload($raw_file, $output_path); </%perl>
 
 DESCRIPTION
     HTTP::File is a module to facilitate file uploads from HTML file
