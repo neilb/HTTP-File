@@ -6,7 +6,7 @@ use File::Basename;
 use strict;
 
 
-$HTTP::File::VERSION = '3.7';
+$HTTP::File::VERSION = '3.8';
 
 package HTTP::File;
 sub platform {
@@ -45,6 +45,9 @@ sub upload {
     wifd "path     \t $path"      , $debug;
     wifd "platform \t $platform"  , $debug;
     wifd "basename \t $basename"  , $debug;
+
+    if ($path =~ m/^(.*)$/) { $path = $1; }
+    if ($basename =~ m/^(.*)$/) { $basename = $1; }
 
     open  O, ">$path/$basename" || die $!;
     # If the input file is binary, the output file should also be binary

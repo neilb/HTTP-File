@@ -111,6 +111,9 @@ Terrence Brannon E<gt>tbone@cpan.orgE<lt>
 binmode support for Windows 
 added by Mark Zellers: (reverse com dot docent at mzellers
 
+Perl 5.8.x taint compatibility added by Rodd Clarkson
+rodd at redfishbluefish dot com dot au
+
 =cut
 
 
