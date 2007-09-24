@@ -121,6 +121,15 @@ rodd at redfishbluefish dot com dot au
 Rodd also suggested that I refer people to a more modern and popular solution
 to the problem of uploading files --- CGI.pm
 
+=head1 SEE ALSO
+
+L<CGI::Upload> - a newer and more secure version of this module. I
+tried to use CGI::Upload, but after staring at the docs and pinging on
+IRC, I still had no clue of how to do what I wanted. Thus the return
+of my insecure, naive approach to the same problem. Caveat emptor,
+whatever that means.
+
+
 =cut
 
 

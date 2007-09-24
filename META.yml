@@ -1,11 +1,12 @@
-# http://module-build.sourceforge.net/META-spec.html
-#XXXXXXX This is a prototype!!!  It will change in the future!!! XXXXX#
-name:         HTTP-File
-version:      3.9
-version_from: File.pm
-installdirs:  site
-requires:
+--- #YAML:1.0
+name:                HTTP-File
+version:             4.0
+abstract:            ~
+license:             ~
+generated_by:        ExtUtils::MakeMaker version 6.36
+distribution_type:   module
+requires:     
     HTTP::Headers::UserAgent:      1.00
-
-distribution_type: module
-generated_by: ExtUtils::MakeMaker version 6.16
+meta-spec:
+    url:     http://module-build.sourceforge.net/META-spec-v1.2.html
+    version: 1.2
